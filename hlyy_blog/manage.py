@@ -7,7 +7,7 @@ import sys
 def main():
     # 利用PROJECT_PROFILE环境变量控制settings配置文件是开发还是生成模式
     # 还需修改wsgi.py
-    profile = os.environ.get('PROJECT_PROFILE', 'develop')
+    profile = os.environ.get('HLYY_BLOG_PROFILE', 'develop')
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'hlyy_blog.settings.{}'.format(profile))
     try:
         from django.core.management import execute_from_command_line

@@ -14,8 +14,20 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.conf import settings
+
+from hlyy_blog.cust_admin_site import custom_site
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # 将用户管理与业务内容管理分成两个网站
+    # 实际上是基于一套管理系统，只是在url上进行区分
+    path('super_admin/', admin.site.urls),
+    path('admin/', custom_site.urls),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
