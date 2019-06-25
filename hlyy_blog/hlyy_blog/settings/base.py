@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '..')
 
 
 # Quick-start development settings - unsuitable for production
@@ -56,18 +56,16 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'hlyy_blog.urls'
 
-THEME = 'bootstrap4'
-
 STATIC_URL = 'static/'
 
 STATIC_ROOT = '' # 部署之后才有用
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'themes', THEME, 'static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'themes', THEME,'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
