@@ -1,0 +1,7 @@
+<ul>
+    {% for comment in sidebar_comments %}
+        <li>
+            {{ comment.nickname }}: <a href="{{ comment.target }}">{{ comment.content }}</a>
+        </li>
+    {% endfor %}
+</ul>

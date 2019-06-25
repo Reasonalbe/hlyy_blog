@@ -58,7 +58,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'hlyy_blog.urls'
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 STATIC_ROOT = '' # 部署之后才有用
 
@@ -86,12 +86,12 @@ WSGI_APPLICATION = 'hlyy_blog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, '../../db.sqlite3'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, '../../db.sqlite3'),
+#     }
+# }
 
 
 # Password validation
@@ -130,7 +130,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
 
 INTERNAL_IPS = [
     '127.0.0.1',

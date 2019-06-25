@@ -57,6 +57,7 @@ class SideBar(models.Model):
     def get_all(cls):
         return cls.objects.filter(status=cls.STATUS_SHOW)
 
+    @property
     def content_to_html(self):
         """将内容渲染成HTML"""
         # 避免循环引用
@@ -67,21 +68,21 @@ class SideBar(models.Model):
             result = self.content
         elif self.display_type == self.DISPLAY_LATEST:
             context = {
-                'posts': Post.get_latest()
+                'sidebar_posts': Post.get_latest()
             }
-            return render_to_string('config/blocks/sidebar_posts.html',
+            return render_to_string('config/sidebar/sidebar_posts.html',
                                     context=context)
         elif self.display_type == self.DISPLAY_HOT:
             context = {
-                'posts': Post.get_hot()
+                'sidebar_posts': Post.get_hot()
             }
-            return render_to_string('config/blocks/sidebar_posts.html',
+            return render_to_string('config/sidebar/sidebar_posts.html',
                                     context=context)
         elif self.display_type == self.DISPLAY_COMMENT:
             context = {
-                'comments': Comments.objects.filter(status=Comments.STATUS_NORMAL)
+                'sidebar_comments': Comments.objects.filter(status=Comments.STATUS_NORMAL)
             }
-            return render_to_string('config/blocks/sidebar_comments.html',
+            return render_to_string('config/sidebar/sidebar_comments.html',
                                     context=context)
 
 

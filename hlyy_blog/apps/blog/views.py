@@ -18,7 +18,9 @@ class CommonViewMixin:
         context.update(Category.get_navs())
         return context
 
-class PostDetailView(DetailView, CommonViewMixin):
+class PostDetailView(CommonViewMixin, DetailView):
+    # Mixin父类需放在前面
+    # TODO: 复习继承顺序
     model = Post
     template_name = 'blog/detail.html'
     pk_url_kwarg = 'post_id'
@@ -33,10 +35,10 @@ class PostDetailView(DetailView, CommonViewMixin):
         return context
 
 
-class IndexView(ListView, CommonViewMixin):
+class IndexView(CommonViewMixin, ListView):
     template_name = 'index.html'
     queryset = Post.get_latest()
-    paginate_by = 1
+    paginate_by = 10
     context_object_name = 'post_list'# 设置模板中使用的变量名
 
 class CategoryView(IndexView):
