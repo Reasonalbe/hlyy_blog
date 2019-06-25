@@ -18,17 +18,23 @@ from django.urls import path, include
 from django.conf import settings
 
 from hlyy_blog.cust_admin_site import custom_site
-from blog.views import PostDetailView, IndexView, CategoryView, TagView
+from blog.views import PostDetailView, IndexView, CategoryView, TagView, SearchView
+from config.views import LinkView
+from comments.views import CommentView
 
 urlpatterns = [
     # 将用户管理与业务内容管理分成两个网站
     # 实际上是基于一套管理系统，只是在url上进行区分
     path('super_admin/', admin.site.urls),
     path('admin/', custom_site.urls),
-    path('/', IndexView.as_view(), name='index'),
+    path('', IndexView.as_view(), name='index'),
     path('post/<int:post_id>.html', PostDetailView.as_view(), name='post-detail'),
-    path('category/<int:category_id>', CategoryView.as_view(), name='category-lst'),
-    path('tag/<int:tag_id>', TagView.as_view(), name='tag-lst'),
+    path('category/<int:category_id>', CategoryView.as_view(), name='category-list'),
+    path('tag/<int:tag_id>', TagView.as_view(), name='tag-list'),
+    path('search/', SearchView.as_view(), name='search'),
+    path('links/', LinkView.as_view(), name='links'),
+    path('comment/', CommentView.as_view(), name='comment'),
+
 ]
 
 if settings.DEBUG:

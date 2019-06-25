@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% load comment_block %}
+
+{% block title %}文章详情{% endblock %}
+
+{% block main %}
+    {% comment_block request.path %}
+{% endblock %}

@@ -1,7 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import DetailView, ListView
+from django.db.models import Q
 
 from .models import Post, Category, Tag
+from comments.models import Comments
+from comments.forms import CommentForm
 from config.models import SideBar
 
 
@@ -15,11 +18,19 @@ class CommonViewMixin:
         context.update(Category.get_navs())
         return context
 
-class PostDetailView(DetailView):
+class PostDetailView(DetailView, CommonViewMixin):
     model = Post
     template_name = 'blog/detail.html'
     pk_url_kwarg = 'post_id'
     context_object_name = 'post'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'comment_list': Comments.get_by_target(self.request.path),
+            'comment_form': CommentForm()
+        })
+        return context
 
 
 class IndexView(ListView, CommonViewMixin):
@@ -64,3 +75,19 @@ class TagView(IndexView):
         tag_id = self.kwargs.get('tag_id')
         queryset = queryset.filter(tag__id=tag_id)
         return queryset
+
+class SearchView(IndexView):
+    def get_queryset(self):
+        qs = super().get_queryset()
+        keyword = self.request.GET.get('keyword')
+        if not keyword:
+            return qs
+        else:
+            return qs.filter(Q(title__icontains=keyword) | Q(desc__icontains=keyword))
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(object_list=object_list, **kwargs)
+        context.update({
+            'keyword': self.request.GET.get('keyword', '')
+        })
+        return context

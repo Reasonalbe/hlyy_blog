@@ -24,7 +24,7 @@ class CategoryOwnerFilter(admin.SimpleListFilter):
     parameter_name = 'owner_category'
 
     def lookups(self, request, model_admin):
-        # 必须重写此函数，返回一个二维元祖（id, 显示内容）的列表
+        # 必须重写此函数，返回一个二维元祖（url的参数, 显示内容）的列表
         id_name_count = Category.objects.filter(owner=request.user).\
             annotate(post_count=Count('post')).only('id', 'name').order_by('name')
         return [(qs.id, '{}（{}）'.format(qs.name, qs.post_count)) for qs in id_name_count]
@@ -58,7 +58,9 @@ class TagAdmin(BaseOwnerAdmin):
 class PostAdmin(BaseOwnerAdmin):
     list_display = ('title', 'status', 'category', 'created_time', 'operator')
     list_display_links = []
-    list_filter = [CategoryOwnerFilter,]
+    list_filter = [
+        CategoryOwnerFilter,
+    ]
     # 外键的字段通过双下划线访问
     search_fields = ['title', 'category__name']
     actions_on_top = True

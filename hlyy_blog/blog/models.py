@@ -116,7 +116,8 @@ class Post(models.Model):
 
     @classmethod
     def get_latest(cls):
-        return cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-created_time')
+        return cls.objects.filter(status=cls.STATUS_NORMAL).\
+            select_related('owner').prefetch_related('tag').order_by('-created_time')
 
     @classmethod
     def get_hot(cls):
