@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 
-from hlyy_blog.cust_admin_site import custom_site
+from hlyy_blog.admin.cust_admin_site import custom_site
 from blog.views import PostDetailView, IndexView, CategoryView, TagView, SearchView
 from config.views import LinkView
 from comments.views import CommentView

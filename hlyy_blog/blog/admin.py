@@ -6,8 +6,8 @@ from django.contrib.admin.models import LogEntry
 
 from .adminforms import PostAdminForm
 from .models import Tag, Post, Category
-from hlyy_blog.cust_admin_site import custom_site
-from hlyy_blog.base_admin import BaseOwnerAdmin
+from hlyy_blog.admin.cust_admin_site import custom_site
+from hlyy_blog.admin.base_admin import BaseOwnerAdmin
 # Register your models here.
 
 

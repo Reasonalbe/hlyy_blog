@@ -1,8 +1,8 @@
 from django.contrib import admin
 
-from hlyy_blog.cust_admin_site import custom_site
+from hlyy_blog.admin.cust_admin_site import custom_site
 from .models import Comments
-from hlyy_blog.base_admin import BaseOwnerAdmin
+from hlyy_blog.admin.base_admin import BaseOwnerAdmin
 # Register your models here.
 
 @admin.register(Comments, site=custom_site)
