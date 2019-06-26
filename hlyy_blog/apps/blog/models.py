@@ -1,3 +1,4 @@
+import mistune
 from django.db import models
 from django.contrib.auth import get_user_model
 
@@ -71,6 +72,7 @@ class Post(models.Model):
     title = models.CharField(max_length=255, verbose_name='标题')
     desc = models.CharField(max_length=255, blank=True, verbose_name='摘要')
     content = models.TextField(verbose_name='正文', help_text='正文必须为Markdown格式')
+    content_html = models.TextField(verbose_name='HTML正文', editable=False, blank=True)
     status = models.PositiveIntegerField(choices=STATUS_ITEMS, default=STATUS_NORMAL,
                                          verbose_name='状态')
     owner = models.ForeignKey(to=get_user_model(), on_delete=models.CASCADE, verbose_name='作者')
@@ -122,6 +124,11 @@ class Post(models.Model):
     @classmethod
     def get_hot(cls):
         return cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-pv')
+
+    def save(self, **kwargs):
+        # 将正文转换为markdown并保存至content_html字段中
+        self.content_html = mistune.markdown(self.content)
+        super().save(**kwargs)
 
 
 

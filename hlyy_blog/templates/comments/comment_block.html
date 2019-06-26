@@ -1,4 +1,6 @@
+<hr/>
 <div class="comment">
+    <p>评论区</p>
     <form action="{% url 'comment' %}" class="form-group" method="post">
         {% csrf_token %}
         <input type="hidden" name="target" value="{{ target }}">
