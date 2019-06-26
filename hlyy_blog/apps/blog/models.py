@@ -1,5 +1,6 @@
 import mistune
 from django.db import models
+from django.db.models import F
 from django.contrib.auth import get_user_model
 
 
@@ -119,16 +120,19 @@ class Post(models.Model):
     @classmethod
     def get_latest(cls):
         return cls.objects.filter(status=cls.STATUS_NORMAL).\
-            select_related('owner').prefetch_related('tag').order_by('-created_time')
+            select_related('owner').prefetch_related('tag').\
+            order_by('-created_time')
 
     @classmethod
     def get_hot(cls):
-        return cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-pv')
+        return cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-pv')[:5]
 
     def save(self, **kwargs):
+        # TODO:删除分类功能，与标签重合，并将评论绑定至文章，取消评论通用化，
         # 将正文转换为markdown并保存至content_html字段中
         self.content_html = mistune.markdown(self.content)
         super().save(**kwargs)
+
 
 
 
