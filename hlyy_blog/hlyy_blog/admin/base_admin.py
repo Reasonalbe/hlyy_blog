@@ -1,17 +1,14 @@
-from django.contrib import admin
-
-
-class BaseOwnerAdmin(admin.ModelAdmin):
+class BaseOwnerAdmin:
     """
     1，自动补充文章、分类等Model的owner字段
     2，过滤queryset，只显示当前登录用户的内容
     """
     exclude = ('owner',)
 
-    def save_model(self, request, obj, form, change):
-        obj.owner = request.user
-        return super().save_model(request, obj, form, change)
+    def save_model(self):
+        self.new_obj.owner = self.request.user
+        return super().save_model()
 
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        return qs.filter(owner=request.user)
+    def get_list_queryset(self):
+        qs = super().get_list_queryset()
+        return qs.filter(owner=self.request.user)

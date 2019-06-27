@@ -2,6 +2,7 @@ import mistune
 from django.db import models
 from django.db.models import F
 from django.contrib.auth import get_user_model
+from django.utils.functional import cached_property
 
 
 # Create your models here.
@@ -70,6 +71,8 @@ class Post(models.Model):
         (STATUS_DELETE, '删除'),
         (STATUS_DRAFT, '草稿'),
     )
+    category = models.ForeignKey(to=Category, on_delete=models.CASCADE, verbose_name='分类')
+    tag = models.ManyToManyField(to=Tag, verbose_name='标签')
     title = models.CharField(max_length=255, verbose_name='标题')
     desc = models.CharField(max_length=255, blank=True, verbose_name='摘要')
     content = models.TextField(verbose_name='正文', help_text='正文必须为Markdown格式')
@@ -78,8 +81,6 @@ class Post(models.Model):
                                          verbose_name='状态')
     owner = models.ForeignKey(to=get_user_model(), on_delete=models.CASCADE, verbose_name='作者')
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
-    category = models.ForeignKey(to=Category, on_delete=models.CASCADE, verbose_name='分类')
-    tag = models.ManyToManyField(to=Tag, verbose_name='标签')
     pv = models.PositiveIntegerField(verbose_name='页面访问量', default=0)
     uv = models.PositiveIntegerField(verbose_name='独立访问用户数', default=0)
 
@@ -132,6 +133,10 @@ class Post(models.Model):
         # 将正文转换为markdown并保存至content_html字段中
         self.content_html = mistune.markdown(self.content)
         super().save(**kwargs)
+
+    @cached_property
+    def tags(self):
+        return ','.join(self.tag.values_list('name', flat=True))
 
 
 

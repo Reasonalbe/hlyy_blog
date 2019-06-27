@@ -39,10 +39,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'dal',
+    'dal_select2',
+    'django.contrib.sitemaps' ,
     'debug_toolbar',
     'blog',
     'config',
     'comments',
+    'xadmin',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -135,3 +140,7 @@ USE_TZ = True
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+# xadmin
+XADMIN_TITLE = 'HLYY Blog后台管理系统'
+XADMIN_FOOTER_TITLE = 'Powered by Django2.2'

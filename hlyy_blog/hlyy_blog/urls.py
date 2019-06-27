@@ -13,20 +13,19 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
+import xadmin
 from django.urls import path, include
 from django.conf import settings
+from django.contrib.sitemaps import views as sitemap_views
 
-from hlyy_blog.admin.cust_admin_site import custom_site
 from blog.views import PostDetailView, IndexView, CategoryView, TagView, SearchView
+from blog.rss import LatestPostFeed
+from blog.sitemap import PostSitemap
 from config.views import LinkView
 from comments.views import CommentView
+from .autocomplete import CategoryAutocomplete, TagAutocomplete
 
 urlpatterns = [
-    # 将用户管理与业务内容管理分成两个网站
-    # 实际上是基于一套管理系统，只是在url上进行区分
-    path('super_admin/', admin.site.urls),
-    path('admin/', custom_site.urls),
     path('', IndexView.as_view(), name='index'),
     path('post/<int:post_id>.html', PostDetailView.as_view(), name='post-detail'),
     path('category/<int:category_id>', CategoryView.as_view(), name='category-list'),
@@ -34,7 +33,11 @@ urlpatterns = [
     path('search/', SearchView.as_view(), name='search'),
     path('links/', LinkView.as_view(), name='links'),
     path('comment/', CommentView.as_view(), name='comment'),
-
+    path('sitemap.xml', sitemap_views.sitemap, {'sitemaps': {'posts': PostSitemap}}),
+    path('rss/', LatestPostFeed(), name='rss'),
+    path('xadmin/', xadmin.site.urls, name='xadmin'),
+    path('category-autocomplete/', CategoryAutocomplete.as_view(), name='category-autocomplete'),
+    path('tag-autocomplete/', TagAutocomplete.as_view(), name='tag-autocomplete')
 ]
 
 if settings.DEBUG:
