@@ -12,7 +12,7 @@ from hlyy_blog.admin.base_admin import BaseOwnerAdmin
 
 
 class CategoryOwnerFilter(RelatedFieldListFilter):
-    """自定义过滤器只展示当前用户分类"""
+    """自定义过滤器,展示每个分类下有几篇文章"""
     @classmethod
     def test(cls, field, request, params, model, admin_view, field_path):
         return field.name == 'category'
@@ -54,7 +54,6 @@ class PostAdmin(BaseOwnerAdmin):
     actions_on_bottom = True
     save_on_top = True
     form = PostAdminForm
-    autocomplete_fields = ['category', 'tag']
     form_layout = (
         Fieldset(
             '基础信息',

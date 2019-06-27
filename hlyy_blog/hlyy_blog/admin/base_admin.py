@@ -5,10 +5,12 @@ class BaseOwnerAdmin:
     """
     exclude = ('owner',)
 
-    def save_model(self):
+    def save_models(self):
+        print('############################################')
         self.new_obj.owner = self.request.user
-        return super().save_model()
+        return super().save_models()
 
     def get_list_queryset(self):
         qs = super().get_list_queryset()
+
         return qs.filter(owner=self.request.user)

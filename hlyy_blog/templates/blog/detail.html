@@ -19,7 +19,7 @@
     <hr/>
     <p>
         {% autoescape off %}
-            {{ post.content_html }}
+            {{ post.content }}
         {% endautoescape %}
     </p>
     {% comment_block request.path %}

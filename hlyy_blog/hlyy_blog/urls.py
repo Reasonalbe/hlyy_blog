@@ -17,6 +17,7 @@ import xadmin
 from django.urls import path, include
 from django.conf import settings
 from django.contrib.sitemaps import views as sitemap_views
+from django.conf.urls.static import static
 
 from blog.views import PostDetailView, IndexView, CategoryView, TagView, SearchView
 from blog.rss import LatestPostFeed
@@ -37,8 +38,9 @@ urlpatterns = [
     path('rss/', LatestPostFeed(), name='rss'),
     path('xadmin/', xadmin.site.urls, name='xadmin'),
     path('category-autocomplete/', CategoryAutocomplete.as_view(), name='category-autocomplete'),
-    path('tag-autocomplete/', TagAutocomplete.as_view(), name='tag-autocomplete')
-]
+    path('tag-autocomplete/', TagAutocomplete.as_view(), name='tag-autocomplete'),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     import debug_toolbar

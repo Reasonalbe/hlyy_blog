@@ -1,6 +1,7 @@
 # 用作后台管理的Form
 from django import forms
 from dal import autocomplete
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 from .models import Category, Tag, Post
 
@@ -16,6 +17,7 @@ class PostAdminForm(forms.ModelForm):
         label='标签',
     )
     desc = forms.CharField(widget=forms.Textarea, required=False, label='摘要')
+    content = forms.CharField(widget=CKEditorUploadingWidget(), label='正文', required=True)
     class Meta:
         model = Post
         fields = ('category', 'tag', 'title', 'desc', 'content', 'status')

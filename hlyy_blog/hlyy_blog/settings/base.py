@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'comments',
     'xadmin',
     'crispy_forms',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -144,3 +146,19 @@ INTERNAL_IPS = [
 # xadmin
 XADMIN_TITLE = 'HLYY Blog后台管理系统'
 XADMIN_FOOTER_TITLE = 'Powered by Django2.2'
+
+# ckeditor
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': 800,
+        'tabSpaces': 4,
+        'extraPlugins': 'codesnippet',# 代码插件
+    }
+}
+CKEDITOR_UPLOAD_PATH = 'article_images'
+
+# media
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

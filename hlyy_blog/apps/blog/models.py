@@ -76,7 +76,6 @@ class Post(models.Model):
     title = models.CharField(max_length=255, verbose_name='标题')
     desc = models.CharField(max_length=255, blank=True, verbose_name='摘要')
     content = models.TextField(verbose_name='正文', help_text='正文必须为Markdown格式')
-    content_html = models.TextField(verbose_name='HTML正文', editable=False, blank=True)
     status = models.PositiveIntegerField(choices=STATUS_ITEMS, default=STATUS_NORMAL,
                                          verbose_name='状态')
     owner = models.ForeignKey(to=get_user_model(), on_delete=models.CASCADE, verbose_name='作者')
@@ -84,6 +83,7 @@ class Post(models.Model):
     pv = models.PositiveIntegerField(verbose_name='页面访问量', default=0)
     uv = models.PositiveIntegerField(verbose_name='独立访问用户数', default=0)
 
+    # TODO:删除分类功能，与标签重合，并将评论绑定至文章，取消评论通用化，
 
     def __str__(self):
         return self.title
@@ -128,11 +128,6 @@ class Post(models.Model):
     def get_hot(cls):
         return cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-pv')[:5]
 
-    def save(self, **kwargs):
-        # TODO:删除分类功能，与标签重合，并将评论绑定至文章，取消评论通用化，
-        # 将正文转换为markdown并保存至content_html字段中
-        self.content_html = mistune.markdown(self.content)
-        super().save(**kwargs)
 
     @cached_property
     def tags(self):
