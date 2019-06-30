@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'ckeditor',
     'ckeditor_uploader',
+    # 'hiredis',
 ]
 
 MIDDLEWARE = [
@@ -162,3 +163,17 @@ CKEDITOR_UPLOAD_PATH = 'article_images'
 # media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# caches
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/1',
+        'TIMEOUT': 300,
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            # 'PARSER_CLASS': 'redis.connection.HiredisParser',
+        },
+        'CONNECTION_POOL_CLASS': 'redis.connection.BlockingConnectionPool'
+    }
+}

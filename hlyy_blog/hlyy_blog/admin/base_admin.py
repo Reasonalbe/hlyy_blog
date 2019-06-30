@@ -6,7 +6,6 @@ class BaseOwnerAdmin:
     exclude = ('owner',)
 
     def save_models(self):
-        print('############################################')
         self.new_obj.owner = self.request.user
         return super().save_models()
 

@@ -6,7 +6,6 @@
             <div class="card-body">
                 <h5 class="card-title"><a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h5>
                 <span class="card-link">作者：<a href="#">{{ post.owner.username }}</a></span>
-                <span class="card-link">分类：<a href="{% url 'category-list' post.category.id %}">{{ post.category.name }}</a></span>
                 <span class="card-link">访问量：{{ post.pv }}</span>
                 <span class="card-link">标签：
                     {% for tag in post.tag.all %}
@@ -16,6 +15,8 @@
 
                 <p class="card-text">
                     {{ post.desc }}
+                </p>
+                <p class="card-text">
                     <a href="{% url 'post-detail' post.id %}">完整内容</a>
                 </p>
             </div>

@@ -19,7 +19,7 @@ from django.conf import settings
 from django.contrib.sitemaps import views as sitemap_views
 from django.conf.urls.static import static
 
-from blog.views import PostDetailView, IndexView, CategoryView, TagView, SearchView
+from blog.views import PostDetailView, IndexView, TagView, SearchView
 from blog.rss import LatestPostFeed
 from blog.sitemap import PostSitemap
 from config.views import LinkView
@@ -29,7 +29,6 @@ from .autocomplete import CategoryAutocomplete, TagAutocomplete
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
     path('post/<int:post_id>.html', PostDetailView.as_view(), name='post-detail'),
-    path('category/<int:category_id>', CategoryView.as_view(), name='category-list'),
     path('tag/<int:tag_id>', TagView.as_view(), name='tag-list'),
     path('search/', SearchView.as_view(), name='search'),
     path('links/', LinkView.as_view(), name='links'),
