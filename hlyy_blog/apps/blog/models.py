@@ -80,16 +80,16 @@ class Post(models.Model):
             post_list = []
             tag = None
         else:
-            post_list = tag.post_set.filter(status=Post.STATUS_NORMAL)\
+            post_list = tag.post_set.filter(status=Post.STATUS_NORMAL) \
                 .select_related('owner')
         return post_list, tag
 
     @classmethod
     def get_latest(cls):
         """返回最新的5篇文章"""
-        return cls.objects.filter(status=cls.STATUS_NORMAL).\
-            select_related('owner').prefetch_related('tag').\
-            order_by('-created_time')[:5]
+        return cls.objects.filter(status=cls.STATUS_NORMAL). \
+                   select_related('owner').prefetch_related('tag'). \
+                   order_by('-created_time')[:5]
 
     @classmethod
     def get_hot(cls):
@@ -103,6 +103,13 @@ class Post(models.Model):
         return ','.join(self.tag.values_list('name', flat=True))
 
 
+class Comment(models.Model):
+    nickname = models.CharField(max_length=20, verbose_name='昵称')
+    email = models.EmailField(blank=True, verbose_name='邮箱')
+    target_post = models.ForeignKey(to=Post, on_delete=models.CASCADE, verbose_name='评论文章')
+    content = models.CharField(max_length=500, verbose_name='评论内容')
+    created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
 
-
+    class Meta:
+        verbose_name_plural = verbose_name = '评论'
 

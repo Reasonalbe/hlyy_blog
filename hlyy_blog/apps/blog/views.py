@@ -1,13 +1,13 @@
 from datetime import date
 
-from django.shortcuts import render, get_object_or_404
 from django.views.generic import DetailView, ListView
 from django.db.models import Q, F
 from django.core.cache import cache
 
 from .models import Post, Tag, Tag
 from comments.models import Comments
-from comments.forms import CommentForm
+# from comments.forms import CommentForm
+from .forms import CommentForm
 from config.models import SideBar
 
 

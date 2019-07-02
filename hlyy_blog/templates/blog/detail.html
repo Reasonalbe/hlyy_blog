@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load comment_block %}
+{% load static %}
 
 {% block title %}文章详情{% endblock %}
 
@@ -20,5 +20,16 @@
             {{ post.content }}
         {% endautoescape %}
     </p>
-    {% comment_block request.path %}
+
+    {% include 'blog/comment.html' %}
+
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/comment.css'  %}"  >
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/my_ajax.js' %}"></script>
+    <script src="{% static 'js/my_alert.js' %}"></script>
 {% endblock %}

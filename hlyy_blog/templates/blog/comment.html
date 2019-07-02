@@ -1,0 +1,25 @@
+<div class="comment-wrapper">
+    <h4 class="mb-3 mt-3 pb-lg-2  border-bottom border-primary">评论区</h4>
+    <form action="{% url 'comment' %}" method="post" class="border-primary border-bottom pb-3 ">
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="nickenameInput">昵称：</label>
+                <input type="text" class="form-control-sm" id="nickenameInput" name="nickname">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="emailInput">邮箱：</label>
+                <input type="email" class="form-control-sm" id="emailInput" name="email">
+            </div>
+            <div class="captcha1 form-group col-md-4">
+                <label>验证码：</label>
+                {{ comment_form.captcha }}
+            </div>
+        </div>
+        <div class="form-group">
+            <textarea class="form-control" id="commentInput" rows="3" placeholder="请输入评论"></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">提交评论</button>
+    </form>
+</div>
+
