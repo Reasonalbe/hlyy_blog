@@ -13,7 +13,9 @@
             </div>
             <div class="captcha1 form-group col-md-4">
                 <label><span style="color: red">*</span>验证码：</label>
-                {{ comment_form.captcha }}
+                <input type="text" name='captcha' class="form-control-sm" required >
+                <img class="captcha" src="{{captcha.image_url}}" alt="点击换一张" id="id_captcha_1">
+                <input value="{{captcha.hashkey}}" name="hashkey" type="hidden" id="id_captcha_0">
             </div>
         </div>
         <div class="form-group">

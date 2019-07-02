@@ -8,10 +8,11 @@ Comment.prototype.listenCommentSubmit = function() {
     submitBtn.click(function (event) {
         event.preventDefault();
         var email = $("input[name='email']").val();
-        var post_id = $("input[name='submit_btn']").attr("data-post-id");
+        var post_id = $("button[id='submit_btn']").attr("data-post-id");
         var nickname = $("input[name='nickname']").val();
         var content = $("textarea[name='content']").val();
-        var captcha = $("input[id='id_captcha_1']").val();
+        var captcha = $("input[name='captcha']").val();
+        var hashkey = $("input[name='hashkey']").val();
         if (email) {
             my_alert.alertConfirm({
                 'text': '是否通过邮箱订阅该博客？',
@@ -24,6 +25,7 @@ Comment.prototype.listenCommentSubmit = function() {
                             'nickname': nickname,
                             'content': content,
                             'captcha': captcha,
+                            'hashkey': hashkey,
                         },
                         'success': function (result) {
                             if (result['code'] === 200) {
@@ -40,6 +42,8 @@ Comment.prototype.listenCommentSubmit = function() {
                             'nickname': nickname,
                             'content': content,
                             'captcha': captcha,
+                            'hashkey': hashkey,
+                             'post_id': post_id,
                         },
                         'success': function (result) {
                             if (result['code'] === 200) {
@@ -58,6 +62,8 @@ Comment.prototype.listenCommentSubmit = function() {
                     'nickname': nickname,
                     'content': content,
                     'captcha': captcha,
+                    'hashkey': hashkey,
+                     'post_id': post_id,
                 },
                 'success': function (result) {
                     if (result['code'] === 200) {
@@ -72,11 +78,13 @@ Comment.prototype.listenCommentSubmit = function() {
 };
 
 Comment.prototype.listenRefreshCaptcha = function(){
-    var captcha = $("#comment-submit-form img[class='captcha']")
+    var captcha = $("#comment-submit-form img[class='captcha']");
+    var hashkey = $("input[name='hashkey']");
     captcha.click(function () {
         $.get("/captcha/refresh/?"+Math.random(), function(result){
             captcha.attr("src",result.image_url);
             captcha.attr("value",result.key);
+            hashkey.attr("value",result.key);
         });
         return false;
     })

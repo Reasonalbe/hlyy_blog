@@ -9,6 +9,7 @@ from comments.models import Comments
 from .forms import CommentForm
 from config.models import SideBar
 from util import restful
+from util.captcha import generate_captcha, jarge_captcha
 
 
 class CommonViewMixin:
@@ -35,7 +36,8 @@ class PostDetailView(CommonViewMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context.update({
             'comment_list': Comments.get_by_target(self.request.path),
-            'comment_form': CommentForm()
+            'comment_form': CommentForm(),
+            'captcha': generate_captcha(),
         })
         return context
 
@@ -109,6 +111,7 @@ class CommentView(View):
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
-            comment.target = comment_form.cleaned_data.get('post_id')
+            post = Post.objects.get(id=comment_form.cleaned_data.get('post_id'))
+            comment.target_post = post
             comment.save()
         return restful.ok()
