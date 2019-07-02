@@ -7,6 +7,7 @@ from .models import Comment
 class CommentForm(forms.ModelForm):
     captcha = CaptchaField(error_messages={"invalid": "验证码错误"})
     email = forms.EmailField(required=False)
+    post_id = forms.IntegerField(required=False)
 
     class Meta:
         model = Comment

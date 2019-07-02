@@ -26,10 +26,14 @@
 {% endblock %}
 
 {% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/sweetalert.css'  %}"  >
     <link rel="stylesheet" href="{% static 'css/comment.css'  %}"  >
 {% endblock %}
 
 {% block extra_js %}
+    <script src="{% static 'js/sweetalert.min.js' %}"></script>
     <script src="{% static 'js/my_ajax.js' %}"></script>
     <script src="{% static 'js/my_alert.js' %}"></script>
+    <script src="{% static 'js/comment.js' %}"></script>
+
 {% endblock %}

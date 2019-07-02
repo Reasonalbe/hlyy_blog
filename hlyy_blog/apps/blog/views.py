@@ -1,14 +1,14 @@
 from datetime import date
 
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, View
 from django.db.models import Q, F
 from django.core.cache import cache
 
-from .models import Post, Tag, Tag
+from .models import Post, Tag
 from comments.models import Comments
-# from comments.forms import CommentForm
 from .forms import CommentForm
 from config.models import SideBar
+from util import restful
 
 
 class CommonViewMixin:
@@ -103,3 +103,12 @@ class SearchView(IndexView):
             'keyword': self.request.GET.get('keyword', '')
         })
         return context
+
+class CommentView(View):
+    def post(self, request):
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.target = comment_form.cleaned_data.get('post_id')
+            comment.save()
+        return restful.ok()

@@ -105,7 +105,6 @@ class Post(models.Model):
 
 class Comment(models.Model):
     nickname = models.CharField(max_length=20, verbose_name='昵称')
-    email = models.EmailField(blank=True, verbose_name='邮箱')
     target_post = models.ForeignKey(to=Post, on_delete=models.CASCADE, verbose_name='评论文章')
     content = models.CharField(max_length=500, verbose_name='评论内容')
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')

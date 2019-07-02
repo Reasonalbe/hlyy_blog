@@ -19,11 +19,10 @@ from django.conf import settings
 from django.contrib.sitemaps import views as sitemap_views
 from django.conf.urls.static import static
 
-from blog.views import PostDetailView, IndexView, TagView, SearchView
+from blog.views import PostDetailView, IndexView, TagView, SearchView, CommentView
 from blog.rss import LatestPostFeed
 from blog.sitemap import PostSitemap
 from config.views import LinkView
-from comments.views import CommentView
 from .autocomplete import CategoryAutocomplete, TagAutocomplete
 
 urlpatterns = [
