@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block main %}
     {% for post in post_list %}
         <div class="card post">
@@ -22,13 +22,21 @@
             </div>
         </div>
     {% endfor %}
-    {% if page_obj %}
-        {% if page_obj.has_previous %}
-            <a href="?page={{ page_obj.previous_page_number }}">上一页</a>
-        {% endif %}
-        Page {{ page_obj.number }} of {{ paginator.num_pages }}.
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">下一页</a>
-        {% endif %}
-    {% endif %}
+    <div class="page-wrapper">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li><a href="?page={{ page_obj.previous_page_number }}" class="previous">← 上一页</a></li>
+                <li><a href="?page=1">首页</a></li>
+            {% endif %}
+            <li><span class="page_number ">Page {{ page_obj.number }} of {{ paginator.num_pages }}</span></li>
+            {% if page_obj.has_next %}
+                <li><a href="?page={{ page_obj.num_pages }}">末页</a></li>
+                <li><a href="?page={{ page_obj.next_page_number }}" class="next">下一页 →</a></li>
+            {% endif %}
+        </ul>
+    </div>
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/index.css'  %}">
 {% endblock %}
