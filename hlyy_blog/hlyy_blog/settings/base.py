@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'blog',
     'config',
-    'comments',
     'xadmin',
     'crispy_forms',
     'ckeditor',
@@ -178,3 +177,7 @@ CACHES = {
         'CONNECTION_POOL_CLASS': 'redis.connection.BlockingConnectionPool'
     }
 }
+
+# django-simple-captcha
+CAPTCHA_IMAGE_SIZE = (70, 30)
+CAPTCHA_FONT_SIZE = 18

@@ -4,8 +4,7 @@ from django.views.generic import DetailView, ListView, View
 from django.db.models import Q, F
 from django.core.cache import cache
 
-from .models import Post, Tag
-from comments.models import Comments
+from .models import Post, Tag, Comment
 from .forms import CommentForm
 from config.models import SideBar
 from util import restful
@@ -30,13 +29,11 @@ class PostDetailView(CommonViewMixin, DetailView):
     context_object_name = 'post'
 
     def get_queryset(self):
-        return Post.objects.filter(status=Post.STATUS_NORMAL).prefetch_related('tag')
+        return Post.objects.filter(status=Post.STATUS_NORMAL).prefetch_related('tag', 'comment_set')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({
-            'comment_list': Comments.get_by_target(self.request.path),
-            'comment_form': CommentForm(),
             'captcha': generate_captcha(),
         })
         return context
@@ -109,6 +106,7 @@ class SearchView(IndexView):
 class CommentView(View):
     def post(self, request):
         comment_form = CommentForm(request.POST)
+        # 评论是通过AJAX发送至后台
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
             post = Post.objects.get(id=comment_form.cleaned_data.get('post_id'))

@@ -5,7 +5,7 @@ from util.captcha import jarge_captcha
 
 class FormMixin:
     def get_error(self):
-        # 将返回的错误构造的更可读
+        # 将表单验证的错误信息构造得更可读
         new_errors = {}
         if hasattr(self, 'errors'):
             errors = self.errors.get_json_data()
@@ -26,6 +26,7 @@ class CommentForm(forms.ModelForm, FormMixin):
     })
 
     def clean(self):
+        # 验证码判断
         capthca = self.cleaned_data.get('captcha')
         hashkey = self.cleaned_data.get('hashkey')
         if not jarge_captcha(capthca, hashkey):
