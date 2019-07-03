@@ -1,0 +1,55 @@
+<div class="card">
+    <div class="card-body">
+        <h3 class="card-title text-center text-primary font-weight-bold">现在订阅</h3>
+        <p class="card-text">通过邮箱订阅，关注博客最新动态！</p>
+        <form action="#" method="post">
+            <div class="form-group">
+                <label for="id_email" class="font-weight-bold">电子邮箱：</label>
+                <input type="email" class="form-control" id="id_email" placeholder="your@email.com">
+            </div>
+            <button type="submit" class="btn btn-primary form-control font-weight-bold">订阅</button>
+        </form>
+    </div>
+</div>
+<div class="card">
+    <img class="card-img-top" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1562166763665&di=2c5d50ee5e35e7084038f04815272ac5&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fq_mini%2Cc_zoom%2Cw_640%2Fimages%2F20170728%2F5843abd8cdb74745a2fe2349879cb055.jpeg" alt="Card image cap">
+    <div class="card-body">
+        <h4 class="card-title">作者简介</h4>
+        <h5 class="card-subtitle my-2 text-dark font-weight-bold">HLYY</h5>
+        <p class="card-text">重庆大学电气工程学院在读研究生。</p>
+        <p class="card-text">电子邮箱：jk2005112009@126.com</p>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">公告</h4>
+        <p class="card-text">本博客源代码已开源至Github，欢迎评论及分享。喜欢的朋友烦请给个Star，谢谢！</p>
+        <a href="#" class="card-link">Github仓库</a>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">热门文章</h4>
+        <ul class="list-group list-group-flush">
+            {% for post in hot_posts %}
+                <li class="list-group-item">
+                    <a href="{% url 'post-detail' post.id %}" class="card-link">{{ post.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">最新评论</h4>
+        <ul class="list-group list-group-flush">
+            {% for comment in latest_comments %}
+                <li class="list-group-item">
+                    <span class="font-weight-bold">{{ comment.nickname }}:</span><br/>
+                    <a href="{% url 'post-detail' comment.target_post.id %}" class="card-link text-truncate">{{ comment.content }}</a><br/>
+                    <span class="text-muted">{{ comment.created_time }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

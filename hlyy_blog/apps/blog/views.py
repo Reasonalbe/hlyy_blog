@@ -6,7 +6,6 @@ from django.core.cache import cache
 
 from .models import Post, Tag, Comment
 from .forms import CommentForm
-from config.models import SideBar
 from util import restful
 from util.captcha import generate_captcha, jarge_captcha
 
@@ -16,7 +15,8 @@ class CommonViewMixin:
         """获取侧边栏、导航标签栏以及底部标签栏的数据"""
         context = super().get_context_data(**kwargs)
         context.update({
-            'sidebars':SideBar.get_all()
+            'hot_posts': Post.get_hot(),
+            'latest_comments': Comment.get_latest(),
         })
         context.update(Tag.get_navs())
         return context
@@ -72,7 +72,7 @@ class PostDetailView(CommonViewMixin, DetailView):
                 .update(uv=F('uv') + 1)
 
 class IndexView(CommonViewMixin, ListView):
-    template_name = 'index.html'
+    template_name = 'blog/index.html'
     queryset = Post.objects.all().prefetch_related('tag')
     paginate_by = 10 #自动处理分页，并在上下文中加入page_obj与paginator两个变量
     context_object_name = 'post_list'# 设置模板中使用的变量名

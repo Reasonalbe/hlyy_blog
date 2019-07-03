@@ -8,6 +8,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'  %}"  crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/base.css'  %}">
     {% block extra_css %}
     {% endblock %}
 
@@ -21,7 +22,7 @@
 </head>
 <body>
 <div class="container head">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a href="{% url 'index' %}" class="navbar-brand">首页</a>
         <div class="collapse navbar-collapse" id="navbarSupportContent">
             <ul class="navbar-nav mr-auto">
@@ -34,12 +35,12 @@
             <form action="{% url 'search' %}" method="get" class="form-inline my-2 my-lg-0">
                 <input name="keyword" type="search" class="form-control mr-sm-2"
                        placeholder="{% if keyword %}{{ keyword }}{% else %}Search{% endif %}" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">搜索</button>
+                <button class="btn btn-success" type="submit">搜索</button>
             </form>
         </div>
     </nav>
     <div class="jumbotron">
-        <h1 class="display-4">HLYY Blog</h1>
+        <h1 class="display-4 font-weight-bolder">HLYY <span class="badge badge-primary">BLOG</span></h1>
         <p class="lead">基于Django的博客系统</p>
     </div>
 </div>
@@ -48,18 +49,9 @@
         <div class="col-9 post-list">
             {% block main %}{% endblock %}
         </div>
-        <div class="col-3">
+        <div class="col-3 sidebar-wrapper">
             {% block sidebar %}
-                {% for sidebar in sidebars %}
-                    <div class="card sidebar">
-                        <div class="card-body">
-                            <h4 class="card-title">{{ sidebar.title }}</h4>
-                            <p>
-                                {{ sidebar.content_to_html }}
-                            </p>
-                        </div>
-                    </div>
-                {% endfor %}
+                {% include 'sidebar.html' %}
             {% endblock %}
         </div>
     </div>

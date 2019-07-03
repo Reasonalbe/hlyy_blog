@@ -87,9 +87,7 @@ class Post(models.Model):
     @classmethod
     def get_latest(cls):
         """返回最新的5篇文章"""
-        return cls.objects.filter(status=cls.STATUS_NORMAL). \
-                   select_related('owner').prefetch_related('tag'). \
-                   order_by('-created_time')[:5]
+        return cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-created_time')[:5]
 
     @classmethod
     def get_hot(cls):
@@ -112,4 +110,9 @@ class Comment(models.Model):
     class Meta:
         verbose_name_plural = verbose_name = '评论'
         ordering = ['-created_time']
+
+    @classmethod
+    def get_latest(cls):
+        """获取最新的5条评论"""
+        return cls.objects.all().select_related('target_post').order_by('-created_time')[:5]
 
