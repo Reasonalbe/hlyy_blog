@@ -114,4 +114,6 @@ class CommentView(View):
             post = Post.objects.get(id=comment_form.cleaned_data.get('post_id'))
             comment.target_post = post
             comment.save()
-        return restful.ok()
+            return restful.ok()
+        else:
+            return restful.paramserror(comment_form.get_error())
