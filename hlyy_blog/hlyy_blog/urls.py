@@ -22,8 +22,8 @@ from django.conf.urls.static import static
 from blog.views import PostDetailView, IndexView, TagView, SearchView, CommentView
 from blog.rss import LatestPostFeed
 from blog.sitemap import PostSitemap
-from config.views import LinkView
-from .autocomplete import CategoryAutocomplete, TagAutocomplete
+from config.views import LinkView, SubscribeView
+from .autocomplete import TagAutocomplete
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
@@ -35,10 +35,10 @@ urlpatterns = [
     path('sitemap.xml', sitemap_views.sitemap, {'sitemaps': {'posts': PostSitemap}}),
     path('rss/', LatestPostFeed(), name='rss'),
     path('xadmin/', xadmin.site.urls, name='xadmin'),
-    path('category-autocomplete/', CategoryAutocomplete.as_view(), name='category-autocomplete'),
     path('tag-autocomplete/', TagAutocomplete.as_view(), name='tag-autocomplete'),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('captcha/', include('captcha.urls')),
+    path('subscribe/', SubscribeView.as_view(), name='subscribe')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

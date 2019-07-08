@@ -17,7 +17,7 @@ class PostAdminForm(forms.ModelForm):
     content = forms.CharField(widget=CKEditorUploadingWidget(), label='正文', required=True)
     class Meta:
         model = Post
-        fields = ('tag', 'title', 'desc', 'content', 'status')
+        fields = ('tag', 'title', 'desc', 'content', 'status', 'send_subscriber')
         # TODO: 只有在这里放入autocomplete的组件才能有效使用，和静态资源加载顺序有关，记的记录
         widgets = {
             'tag': autocomplete.ModelSelect2Multiple(url='tag-autocomplete'),

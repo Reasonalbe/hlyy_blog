@@ -1,6 +1,6 @@
 import xadmin
 from django.db.models import Count
-from xadmin.layout import Row, Fieldset
+from xadmin.layout import Fieldset
 from xadmin.filters import manager, RelatedFieldListFilter
 
 from .adminforms import PostAdminForm
@@ -37,7 +37,7 @@ class TagAdmin(BaseOwnerAdmin):
     post_count.short_description = '文章数量'
 
 class PostAdmin(BaseOwnerAdmin):
-    list_display = ('title', 'status', 'tag','created_time', )
+    list_display = ('title', 'status', 'tag','created_time', 'send_subscriber')
     list_filter = [
        'tag',
     ]
@@ -53,6 +53,7 @@ class PostAdmin(BaseOwnerAdmin):
             'title',
             'status',
             'tag',
+            'send_subscriber',
         ),
         Fieldset(
             '内容信息',

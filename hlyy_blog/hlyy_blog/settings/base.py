@@ -180,3 +180,11 @@ CACHES = {
 # django-simple-captcha
 CAPTCHA_IMAGE_SIZE = (70, 30)
 CAPTCHA_FONT_SIZE = 18
+
+# 发送邮件的setting设置
+EMAIL_HOST = "smtp.126.com"
+EMAIL_PORT = 25
+EMAIL_HOST_USER = "jk2005112009@126.com"
+EMAIL_HOST_PASSWORD = "heli0610"
+EMAIL_USE_TLS = True
+EMAIL_FROM = "jk2005112009@126.com"

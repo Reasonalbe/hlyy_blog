@@ -61,6 +61,7 @@ class Post(models.Model):
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     pv = models.PositiveIntegerField(verbose_name='页面访问量', default=0)
     uv = models.PositiveIntegerField(verbose_name='独立访问用户数', default=0)
+    send_subscriber = models.BooleanField(default=False, verbose_name='已经发布给订阅者')
 
     # TODO:删除分类功能，与标签重合，并将评论绑定至文章，取消评论通用化，
 
@@ -99,6 +100,11 @@ class Post(models.Model):
     def tags(self):
         """返回所有标签的拼接名字"""
         return ','.join(self.tag.values_list('name', flat=True))
+
+    @classmethod
+    def get_unsent_to_subscriber_post(cls):
+        return cls.objects.filter(send_subscriber=False).prefetch_related('tag')\
+            .defer('created_time', 'content', 'status', 'owner', 'pv', 'uv')
 
 
 class Comment(models.Model):

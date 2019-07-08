@@ -21,4 +21,16 @@ class Link(models.Model):
     class Meta:
         verbose_name_plural = verbose_name = '友链'
 
+class Subscribe(models.Model):
+    STATUS_NORMAL = 1
+    STATUS_DELETE = 0
+    STATUS_ITEMS = (
+        (STATUS_NORMAL, '正常'),
+        (STATUS_DELETE, '删除')
+    )
+    email = models.EmailField(verbose_name='邮箱', db_index=True)
+    status = models.PositiveSmallIntegerField(choices=STATUS_ITEMS, default=STATUS_NORMAL, verbose_name='状态')
+    created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
 
+    class Meta:
+        verbose_name_plural = verbose_name = '订阅'

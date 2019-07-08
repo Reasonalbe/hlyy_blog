@@ -2,12 +2,13 @@
     <div class="card-body">
         <h3 class="card-title text-center text-primary font-weight-bold">现在订阅</h3>
         <p class="card-text">通过邮箱订阅，关注博客最新动态！</p>
-        <form action="#" method="post">
+        <form action="" method="post">
+            {% csrf_token %}
             <div class="form-group">
                 <label for="id_email" class="font-weight-bold">电子邮箱：</label>
-                <input type="email" class="form-control" id="id_email" placeholder="your@email.com">
+                <input required type="email" class="form-control" id="id_email" placeholder="your@email.com" name="subscribe-email">
             </div>
-            <button type="submit" class="btn btn-primary form-control font-weight-bold">订阅</button>
+            <button type="submit" id="subscribe-btn" class="btn btn-primary form-control font-weight-bold">订阅</button>
         </form>
     </div>
 </div>
@@ -46,7 +47,7 @@
             {% for comment in latest_comments %}
                 <li class="list-group-item">
                     <span class="font-weight-bold">{{ comment.nickname }}:</span><br/>
-                    <a href="{% url 'post-detail' comment.target_post.id %}" class="card-link text-truncate">{{ comment.content }}</a><br/>
+                    <a href="{% url 'post-detail' comment.target_post.id %}" class="card-link">{{ comment.content | truncatechars:30 }}</a><br/>
                     <span class="text-muted">{{ comment.created_time }}</span>
                 </li>
             {% endfor %}
