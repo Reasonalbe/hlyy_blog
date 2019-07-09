@@ -10,3 +10,7 @@
 .captcha1 > img{
     float:right;
 }
+
+.content-wrapper {
+    background-color: white;
+}

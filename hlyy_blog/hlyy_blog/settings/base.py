@@ -154,7 +154,22 @@ CKEDITOR_CONFIGS = {
         'height': 300,
         'width': 800,
         'tabSpaces': 4,
-        'extraPlugins': 'codesnippet',# 代码插件
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            # 表情 代码块
+            ['Smiley', 'CodeSnippet'],
+            # 字体风格
+            ['Bold', 'Italic', 'Underline', 'RemoveFormat', 'Blockquote'],
+            # 字体颜色
+            ['TextColor', 'BGColor'],
+            # 链接
+            ['Link', 'Unlink'],
+            # 列表
+            ['NumberedList', 'BulletedList'],
+            # 最大化
+            ['Maximize']
+        ],
+        'extraPlugins': ','.join(['codesnippet', 'prism', 'widget', 'lineutils']),
     }
 }
 CKEDITOR_UPLOAD_PATH = 'article_images'
