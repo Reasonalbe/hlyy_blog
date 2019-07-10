@@ -22,6 +22,9 @@ lib64/
 parts/
 sdist/
 var/
+conf/
+log/
+develop.py # 开发环境的settings
 wheels/
 pip-wheel-metadata/
 share/python-wheels/
