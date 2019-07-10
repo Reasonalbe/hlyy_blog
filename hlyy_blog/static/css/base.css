@@ -41,3 +41,13 @@
 body {
     background-color: #f9f9f9;
 }
+
+.tag {
+    background-color: #1eaedb;
+    padding: 4px 8px;
+    color: #fff;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    margin-right: 5px;
+    text-decoration: none;
+}

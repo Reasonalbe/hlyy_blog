@@ -4,20 +4,25 @@
     {% for post in post_list %}
         <div class="card post">
             <div class="card-body">
-                <h5 class="card-title"><a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h5>
-                <span class="card-link">作者：HLYY</span>
-                <span class="card-link">访问量：{{ post.pv }}</span>
-                <span class="card-link">标签：
-                    {% for tag in post.tag.all %}
-                        <a href="{% url 'tag-list' tag.id %}">{{ tag.name }}</a>
-                    {% endfor %}
-                    </span>
-
+                <h4 class="card-title text-center mt-1"><a class="text-dark font-weight-bold" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
+                <ul class="list-inline mx-auto text-center text-muted">
+                    <li class="list-inline-item mx-3"><i class="icon-user mr-2"></i>HLYY</li>
+                    <li class="list-inline-item mx-3"><i class="icon-eye-open mr-2"></i> {{ post.pv }}阅读</li>
+                    <li class="list-inline-item mx-3"><i class="icon-calendar mr-2"></i>{{ post.created_time }}</li>
+                    <li class="list-inline-item mx-3"><i class="icon-comments mr-2"></i>{{ post.comment_count }}评论</li>
+                </ul>
+                <hr class="my-4 ">
                 <p class="card-text">
                     {{ post.desc }}
                 </p>
+                <hr class="my-4 ">
                 <p class="card-text">
-                    <a href="{% url 'post-detail' post.id %}">完整内容</a>
+                    <a class="border-bottom-0" href="{% url 'post-detail' post.id %}">完整内容</a>
+                    <span class="pull-right">
+                    {% for tag in post.tag.all %}
+                        <a href="{% url 'tag-list' tag.id %}" class="tag">{{ tag.name }}</a>
+                    {% endfor %}
+                </span>
                 </p>
             </div>
         </div>
@@ -38,5 +43,4 @@
 {% endblock %}
 
 {% block extra_css %}
-
 {% endblock %}

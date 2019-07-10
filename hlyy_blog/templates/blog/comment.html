@@ -1,40 +1,42 @@
 <div class="comment-wrapper">
-    <h4 class="mb-3 mt-3 pb-lg-2  border-bottom border-primary">评论区</h4>
-    <form action="" method="post" class="border-primary border-bottom pb-3 " id="comment-submit-form">
-        {% csrf_token %}
-        <div class="form-row">
-            <div class="form-group col-md-4 ">
-                <label for="nickenameInput"><span style="color: red">*</span>昵称：</label>
-                <input type="text" class="form-control-sm" id="nickenameInput" name="nickname" minlength="3">
-            </div>
-{#            <div class="form-group col-md-4">#}
-{#                <label for="emailInput">邮箱：</label>#}
-{#                <input type="email" class="form-control-sm" id="emailInput" name="email">#}
-{#            </div>#}
-            <div class="captcha1 form-group col-md-4">
-                <label><span style="color: red">*</span>验证码：</label>
-                <input type="text" name='captcha' class="form-control-sm" required >
-                <img class="captcha" src="{{captcha.image_url}}" alt="点击换一张" id="id_captcha_1">
-                <input value="{{captcha.hashkey}}" name="hashkey" type="hidden" id="id_captcha_0">
-            </div>
-        </div>
-        <div class="form-group">
-            <textarea class="form-control" name="content" id="commentInput" rows="3" placeholder="请输入评论" minlength="5"></textarea>
-        </div>
-        <button class="btn btn-primary" type="submit" id="submit_btn" data-post-id="{{ post.pk }}">提交评论</button>
-    </form>
-    <div class="comment-list-wrapper">
-        <ul class="list-group list-group-flush">
-            {% for comment in post.comment_set.all %}
-                <li class="list-group-item">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">{{ comment.nickname }}</h5>
-                    <small>{{ comment.created_time }}</small>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title border-bottom border-primary pb-3">评论区（{{ post.comment_set.count }}）</h4>
+            <form action="" method="post" class="border-primary border-bottom pb-3 " id="comment-submit-form">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group col-6 ">
+                        <label for="nickenameInput"><span style="color: red">*</span>昵称：</label>
+                        <input type="text" class="form-control-sm" id="nickenameInput" name="nickname" minlength="3">
+                    </div>
+                    <div class=" form-group col-6">
+                        <label><span style="color: red">*</span>验证码：</label>
+                        <input type="text" name='captcha' class="form-control-sm w-25" required >
+                        <img class="captcha" src="{{captcha.image_url}}" alt="点击换一张" id="id_captcha_1">
+                        <input value="{{captcha.hashkey}}" name="hashkey" type="hidden" id="id_captcha_0">
+                    </div>
                 </div>
-                <p class="mb-1">{{ comment.content }}</p>
-            </li>
-            {% endfor %}
-        </ul>
+                <div class="form-group">
+                    <textarea class="form-control" name="content" id="commentInput" rows="3" placeholder="请输入评论" minlength="5"></textarea>
+                </div>
+                <button class="btn btn-primary" type="submit" id="submit_btn" data-post-id="{{ post.pk }}">提交评论</button>
+            </form>
+            <div class="comment-list-wrapper">
+                <ul class="list-group list-group-flush">
+                    {% for comment in post.comment_set.all %}
+                        <li class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="font-weight-bold mb-2">{{ comment.nickname }}</h5>
+                                <small class="text-success">{{ comment.created_time }}</small>
+                            </div>
+                            <p class="mb-1">{{ comment.content }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
     </div>
+
+
 </div>
 

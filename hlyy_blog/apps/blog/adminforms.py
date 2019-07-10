@@ -22,3 +22,4 @@ class PostAdminForm(forms.ModelForm):
         widgets = {
             'tag': autocomplete.ModelSelect2Multiple(url='tag-autocomplete'),
         }
+

@@ -46,9 +46,9 @@
         <ul class="list-group list-group-flush">
             {% for comment in latest_comments %}
                 <li class="list-group-item">
-                    <span class="font-weight-bold">{{ comment.nickname }}:</span><br/>
-                    <a href="{% url 'post-detail' comment.target_post.id %}" class="card-link">{{ comment.content | truncatechars:30 }}</a><br/>
-                    <span class="text-muted">{{ comment.created_time }}</span>
+                    <p class="font-weight-bold mb-2">{{ comment.nickname }}:</p>
+                    <a href="{% url 'post-detail' comment.target_post_id %}" class="card-link">{{ comment.content | truncatechars:30 }}</a>
+                    <p class="text-muted mt-2 mb-0">{{ comment.created_time }}</p>
                 </li>
             {% endfor %}
         </ul>

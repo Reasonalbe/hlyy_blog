@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'  %}"  crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'  %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" >
     <link rel="stylesheet" href="{% static 'css/sweetalert.css'  %}"  >
     <link rel="stylesheet" href="{% static 'css/base.css'  %}">
     {% block extra_css %}
@@ -29,7 +30,7 @@
             <ul class="navbar-nav mr-auto">
                 {% for tag in navs %}
                     <li class="navitem">
-                        <a href="{% url 'tag-list' tag.id %}" class="nav-link">{{ tag.name }}</a>
+                        <a href="{% url 'tag-list' tag.id %}" class="nav-link {% ifequal tag.id current_tag %}active{% endifequal %}">{{ tag.name }}</a>
                     </li>
                 {% endfor %}
             </ul>
@@ -41,13 +42,13 @@
         </div>
     </nav>
     <div class="jumbotron">
-        <h1 class="display-4 font-weight-bolder">HLYY <span class="badge badge-primary">BLOG</span></h1>
-        <p class="lead">基于Django的博客系统</p>
+        <h1 class="display-3 font-weight-bold text-center">HLYY <span class="badge badge-primary">BLOG</span></h1>
+        <p class="lead text-center">基于Django的博客系统，分享一些Web开发的技术文章以及个人感悟</p>
     </div>
 </div>
 <div class="container main">
     <div class="row">
-        <div class="col-9 content-wrapper">
+        <div class="col-9">
             {% block main %}{% endblock %}
         </div>
         <div class="col-3 sidebar-wrapper">
@@ -57,19 +58,11 @@
         </div>
     </div>
 </div>
-<footer class="footer">
+<footer class="footer bg-primary text-center">
     {% block footer %}
-        <div class="container">
-            <hr/>
-            <nav class="nav category">
-                {% for tag in normal_tags %}
-                    <a href="{% url 'tag-list' tag.id %}" class="nav-link">{{ tag.name }}</a>
-                {% endfor %}
-            </nav>
-        </div>
-        <div class="container power">
-            <span class="text-muted">Power by Django</span>
-        </div>
+        <p class="text-white py-3 m-0">© 2019 HLYY BLOG  |  Powered by Django 2.2
+            <a class="text-white" href="xadmin/">|  管理网站</a>
+        </p>
     {% endblock %}
 </footer>
 <!-- Optional JavaScript -->

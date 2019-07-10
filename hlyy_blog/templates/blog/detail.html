@@ -4,22 +4,30 @@
 {% block title %}文章详情{% endblock %}
 
 {% block main %}
-    <h1>{{ post.title }}</h1>
-    <div>
-        <span>
-            标签：
-            {% for tag in post.tag.all %}
-                <a href="{% url 'tag-list' tag.id %}">{{ tag.name }}</a> |
-            {% endfor %}
-        </span>
-        <span>作者：HLYY</span>
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title text-center">{{ post.title }}</h3>
+            <ul class="list-inline mx-auto text-center text-muted">
+                <li class="list-inline-item mx-3"><i class="icon-user mr-2"></i>HLYY</li>
+                <li class="list-inline-item mx-3"><i class="icon-eye-open mr-2"></i> {{ post.pv }}阅读</li>
+                <li class="list-inline-item mx-3"><i class="icon-calendar mr-2"></i>{{ post.created_time }}</li>
+                <li class="list-inline-item mx-3"><i class="icon-comments mr-2"></i>{{ post.comment_count }}评论</li>
+            </ul>
+            <hr class="my-3">
+            <p class="card-text">
+                {% autoescape off %}
+                    {{ post.content }}
+                {% endautoescape %}
+            </p>
+            <hr class="my-3">
+            <p class="card-text">
+                {% for tag in post.tag.all %}
+                    <a href="{% url 'tag-list' tag.id %}" class="tag">{{ tag.name }}</a>
+                {% endfor %}
+            </p>
+        </div>
     </div>
-    <hr/>
-    <p>
-        {% autoescape off %}
-            {{ post.content }}
-        {% endautoescape %}
-    </p>
+
 
     {% include 'blog/comment.html' %}
 

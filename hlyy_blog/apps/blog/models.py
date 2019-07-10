@@ -93,7 +93,7 @@ class Post(models.Model):
     @classmethod
     def get_hot(cls):
         """返回最热门的5篇文章"""
-        return cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-pv')[:5]
+        return cls.objects.filter(status=cls.STATUS_NORMAL).only('title', 'id').order_by('-pv')[:5]
 
 
     @cached_property
@@ -120,5 +120,5 @@ class Comment(models.Model):
     @classmethod
     def get_latest(cls):
         """获取最新的5条评论"""
-        return cls.objects.all().select_related('target_post').order_by('-created_time')[:5]
+        return cls.objects.all().order_by('-created_time')[:5]
 

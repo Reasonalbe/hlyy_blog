@@ -1,7 +1,7 @@
 from datetime import date
 
 from django.views.generic import DetailView, ListView, View
-from django.db.models import Q, F
+from django.db.models import Q, F, Count
 from django.core.cache import cache
 
 from .models import Post, Tag, Comment
@@ -73,7 +73,7 @@ class PostDetailView(CommonViewMixin, DetailView):
 
 class IndexView(CommonViewMixin, ListView):
     template_name = 'blog/index.html'
-    queryset = Post.objects.all().prefetch_related('tag')
+    queryset = Post.objects.all().prefetch_related('tag').defer('content', 'send_subscriber').annotate(comment_count=Count('comment'))
     paginate_by = 10 #自动处理分页，并在上下文中加入page_obj与paginator两个变量
     context_object_name = 'post_list'# 设置模板中使用的变量名
     # TODO：参考慕学课程重做分页
@@ -86,6 +86,13 @@ class TagView(IndexView):
         tag_id = self.kwargs.get('tag_id')
         queryset = queryset.filter(tag__id=tag_id)
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(TagView, self).get_context_data(**kwargs)
+        context.update({
+            'current_tag': self.kwargs.get('tag_id')
+        })
+        return context
 
 class SearchView(IndexView):
     def get_queryset(self):

@@ -154,21 +154,6 @@ CKEDITOR_CONFIGS = {
         'height': 300,
         'width': 800,
         'tabSpaces': 4,
-        'toolbar': 'Custom',
-        'toolbar_Custom': [
-            # 表情 代码块
-            ['Smiley', 'CodeSnippet'],
-            # 字体风格
-            ['Bold', 'Italic', 'Underline', 'RemoveFormat', 'Blockquote'],
-            # 字体颜色
-            ['TextColor', 'BGColor'],
-            # 链接
-            ['Link', 'Unlink'],
-            # 列表
-            ['NumberedList', 'BulletedList'],
-            # 最大化
-            ['Maximize']
-        ],
         'extraPlugins': ','.join(['codesnippet', 'prism', 'widget', 'lineutils']),
     }
 }
@@ -203,3 +188,6 @@ EMAIL_HOST_USER = "jk2005112009@126.com"
 EMAIL_HOST_PASSWORD = "heli0610"
 EMAIL_USE_TLS = True
 EMAIL_FROM = "jk2005112009@126.com"
+
+
+# TODO: 缓存优化，自动化测试，文章全文搜索，第三方评论+完整回复，
