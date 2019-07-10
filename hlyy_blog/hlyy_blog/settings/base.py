@@ -68,7 +68,7 @@ ROOT_URLCONF = 'hlyy_blog.urls'
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = '' # 部署之后才有用
+STATIC_ROOT = os.path.join(BASE_DIR, 'collectedstatics') # 部署之后才有用
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
