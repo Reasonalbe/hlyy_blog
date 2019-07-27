@@ -67,9 +67,6 @@ class PostAdmin(BaseOwnerAdmin):
         return obj.tags
     my_tag.short_description = '标签'
 
-    def save_models(self):
-        pass
-
 
 xadmin.site.register(Tag, TagAdmin)
 xadmin.site.register(Post, PostAdmin)

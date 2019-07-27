@@ -22,7 +22,7 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'xa9_oka8k@7co-=%l4o^(+d%h8ytz(+l_51wg@x+=%offs)$+&'
+SECRET_KEY = os.environ.get('HLYY_BLOG_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -185,7 +185,7 @@ CAPTCHA_FONT_SIZE = 18
 EMAIL_HOST = "smtp.126.com"
 EMAIL_PORT = 25
 EMAIL_HOST_USER = "jk2005112009@126.com"
-EMAIL_HOST_PASSWORD = "heli0610"
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 EMAIL_FROM = "jk2005112009@126.com"
 

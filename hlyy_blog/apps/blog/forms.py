@@ -20,6 +20,7 @@ class CommentForm(forms.ModelForm, FormMixin):
         hashkey = self.cleaned_data.get('hashkey')
         if not jarge_captcha(capthca, hashkey):
             raise forms.ValidationError('验证码错误')
+        return self.cleaned_data
 
     class Meta:
         model = Comment

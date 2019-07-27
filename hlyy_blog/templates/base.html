@@ -61,7 +61,7 @@
 <footer class="footer bg-primary text-center">
     {% block footer %}
         <p class="text-white py-3 m-0">© 2019 HLYY BLOG  |  Powered by Django 2.2
-            <a class="text-white" href="xadmin/">|  管理网站</a>
+            <a class="text-white" href="http://{{ request.get_host }}/xadmin/">|  管理网站</a>
         </p>
     {% endblock %}
 </footer>
