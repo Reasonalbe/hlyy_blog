@@ -4,7 +4,7 @@ from xadmin.layout import Fieldset
 from xadmin.filters import manager, RelatedFieldListFilter
 
 from .adminforms import PostAdminForm
-from .models import Tag, Post
+from .models import Tag, Post, Comment
 from hlyy_blog.admin.base_admin import BaseOwnerAdmin
 # Register your models here.
 
@@ -67,6 +67,13 @@ class PostAdmin(BaseOwnerAdmin):
         return obj.tags
     my_tag.short_description = '标签'
 
+class CommentAdmin:
+    list_display = ('nickname', 'email', 'url', 'target_post', 'content', 'created_time', 'reply_to')
+    list_filter = [
+        'target_post',
+    ]
+    search_fields = ['nickname', 'content']
 
 xadmin.site.register(Tag, TagAdmin)
 xadmin.site.register(Post, PostAdmin)
+xadmin.site.register(Comment, CommentAdmin)

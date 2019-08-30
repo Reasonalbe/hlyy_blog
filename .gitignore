@@ -24,7 +24,6 @@ sdist/
 var/
 conf/
 log/
-develop.py # 开发环境的settings
 wheels/
 pip-wheel-metadata/
 share/python-wheels/
@@ -65,6 +64,9 @@ coverage.xml
 *.log
 local_settings.py
 db.sqlite3
+develop.py # 开发环境的settings
+collectedstatics/
+media/
 
 # Flask stuff:
 instance/

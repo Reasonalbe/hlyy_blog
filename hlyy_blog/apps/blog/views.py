@@ -14,6 +14,7 @@ class CommonViewMixin:
     def get_context_data(self, **kwargs):
         """获取侧边栏、导航标签栏以及底部标签栏的数据"""
         context = super().get_context_data(**kwargs)
+        #TODO: 热门文章和最新评论可以缓存
         context.update({
             'hot_posts': Post.get_hot(),
             'latest_comments': Comment.get_latest(),
@@ -83,6 +84,7 @@ class TagView(IndexView):
     def get_queryset(self):
         """根据标签过滤文章"""
         queryset = super().get_queryset()
+        # kwargs包含通过get请求在url中的传来的参数
         tag_id = self.kwargs.get('tag_id')
         queryset = queryset.filter(tag__id=tag_id)
         return queryset
@@ -118,6 +120,13 @@ class CommentView(View):
             comment = comment_form.save(commit=False)
             post = Post.objects.get(id=comment_form.cleaned_data.get('post_id'))
             comment.target_post = post
+            reply_comment_id = comment_form.cleaned_data.get('reply_comment_id')
+            if reply_comment_id:
+                # 二级评论
+                reply_to = Comment.objects.get(id=reply_comment_id).nickname
+                parrent_comment = Comment.objects.get(id=reply_comment_id).get_root()
+                comment.parent = parrent_comment
+                comment.reply_to = reply_to
             comment.save()
             return restful.ok()
         else:

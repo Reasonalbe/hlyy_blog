@@ -8,11 +8,11 @@ from util.forms import FormMixin
 class CommentForm(forms.ModelForm, FormMixin):
     captcha = forms.CharField(max_length=10)
     hashkey = forms.CharField(max_length=100)
-    # email = forms.EmailField(required=False)
     post_id = forms.IntegerField()
     nickname = forms.CharField(max_length=20, error_messages={
         'max_length': '昵称必须小于20个字符'
     })
+    reply_comment_id = forms.IntegerField(required=False)
 
     def clean(self):
         # 验证码判断
@@ -24,4 +24,4 @@ class CommentForm(forms.ModelForm, FormMixin):
 
     class Meta:
         model = Comment
-        fields = ['nickname', 'content']
+        fields = ['nickname', 'content', 'url', 'email']

@@ -38,6 +38,7 @@ var my_ajax = {
                     // {'password': ['XXX', 'YYY'],'telephone': ['XXX', 'YYY']}
                     for(var key in messageObj){
                         var message = messageObj[key][0];
+                        message = '(' + key + ')' + message;
                         window.messageBox.showError(message)
                     }
                 }

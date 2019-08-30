@@ -1,42 +1,70 @@
+{% load mptt_tags %}
 <div class="comment-wrapper">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title border-bottom border-primary pb-3">评论区（{{ post.comment_set.count }}）</h4>
-            <form action="" method="post" class="border-primary border-bottom pb-3 " id="comment-submit-form">
-                {% csrf_token %}
-                <div class="form-row">
-                    <div class="form-group col-6 ">
-                        <label for="nickenameInput"><span style="color: red">*</span>昵称：</label>
-                        <input type="text" class="form-control-sm" id="nickenameInput" name="nickname" minlength="3">
-                    </div>
-                    <div class=" form-group col-6">
-                        <label><span style="color: red">*</span>验证码：</label>
-                        <input type="text" name='captcha' class="form-control-sm w-25" required >
-                        <img class="captcha" src="{{captcha.image_url}}" alt="点击换一张" id="id_captcha_1">
-                        <input value="{{captcha.hashkey}}" name="hashkey" type="hidden" id="id_captcha_0">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <textarea class="form-control" name="content" id="commentInput" rows="3" placeholder="请输入评论" minlength="5"></textarea>
-                </div>
-                <button class="btn btn-primary" type="submit" id="submit_btn" data-post-id="{{ post.pk }}">提交评论</button>
+            <h4 class="card-title border-bottom border-primary pb-3">评论该文章</h4>
+            <form action="" method="post" id="comment_form">
+                {% include 'blog/comment_form.html' %}
             </form>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title border-bottom border-primary pb-3">评论区（{{ post.comment_set.count }}）</h4>
             <div class="comment-list-wrapper">
                 <ul class="list-group list-group-flush">
-                    {% for comment in post.comment_set.all %}
-                        <li class="list-group-item">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="font-weight-bold mb-2">{{ comment.nickname }}</h5>
-                                <small class="text-success">{{ comment.created_time }}</small>
-                            </div>
-                            <p class="mb-1">{{ comment.content }}</p>
-                        </li>
-                    {% endfor %}
+                    {% recursetree post.comment_set.all %}
+                        {% with comment=node %}
+                            <li class="list-group-item">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="font-weight-bold mb-2">
+                                        {{ comment.nickname }}{% if comment.reply_to %}
+                                            -> {{ comment.reply_to }}
+                                        {% endif %}</h5>
+                                    <small class="text-success">{{ comment.created_time }}</small>
+                                </div>
+                                <p class="mb-1">
+                                    {{ comment.content }}
+                                    <br/>
+                                    {% if not node.is_leaf_node %}
+                                        <a class="btn btn-light btn-sm float-left mt-2" data-toggle="collapse" href="#reply-collapse" role="button" aria-expanded="false" aria-controls="reply-collapse">
+                                            显示回复
+                                        </a>
+                                    {% endif %}
+                                    <a href="#" class="text-primary float-right mt-2" data-toggle="modal" data-target="#replyModal" data-nickname="{{ comment.nickname }}" data-comment-id="{{ comment.id }}">回复</a>
+                                </p>
+                                {% if not node.is_leaf_node %}
+                                    <div class="collapse" id="reply-collapse">
+                                        <ul class="list-group list-group-flush mt-5 border">
+                                            {{ children }}
+                                        </ul>
+                                    </div>
+
+                                {% endif %}
+
+                            </li>
+                        {% endwith %}
+                    {% endrecursetree %}
                 </ul>
             </div>
         </div>
     </div>
-
-
+    <div class="modal fade bd-example-modal-lg" id="replyModal" tabindex="-1" role="dialog" aria-labelledby="replyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post" id="reply_form">
+                        {% include 'blog/comment_form.html' %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 

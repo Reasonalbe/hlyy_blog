@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.functional import cached_property
+from mptt.models import TreeForeignKey, MPTTModel
 
 
 # Create your models here.
@@ -107,11 +108,23 @@ class Post(models.Model):
             .defer('created_time', 'content', 'status', 'owner', 'pv', 'uv')
 
 
-class Comment(models.Model):
+class Comment(MPTTModel):
     nickname = models.CharField(max_length=20, verbose_name='昵称')
     target_post = models.ForeignKey(to=Post, on_delete=models.CASCADE, verbose_name='评论文章')
+    email = models.EmailField(verbose_name='邮箱', null=True, default=None)
+    url = models.URLField(blank=True, null=True, default=None, verbose_name='个人网站')
     content = models.CharField(max_length=500, verbose_name='评论内容')
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
+    parent = TreeForeignKey(
+        to='self',
+        on_delete=models.CASCADE,
+        verbose_name='父级评论',
+        blank=True,
+        null=True,
+        default=None,
+        related_name='children'
+    )
+    reply_to = models.CharField(max_length=20, blank=True, null=True, verbose_name='回复对象', default=None)
 
     class Meta:
         verbose_name_plural = verbose_name = '评论'
