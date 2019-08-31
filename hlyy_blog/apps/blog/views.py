@@ -74,7 +74,7 @@ class PostDetailView(CommonViewMixin, DetailView):
 
 class IndexView(CommonViewMixin, ListView):
     template_name = 'blog/index.html'
-    queryset = Post.objects.all().prefetch_related('tag').defer('content', 'send_subscriber').annotate(comment_count=Count('comment'))
+    queryset = Post.objects.filter(status=Post.STATUS_NORMAL).prefetch_related('tag').defer('content', 'send_subscriber').annotate(comment_count=Count('comment'))
     paginate_by = 10 #自动处理分页，并在上下文中加入page_obj与paginator两个变量
     context_object_name = 'post_list'# 设置模板中使用的变量名
     # TODO：参考慕学课程重做分页
