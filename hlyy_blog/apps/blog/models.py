@@ -111,7 +111,7 @@ class Post(models.Model):
 class Comment(MPTTModel):
     nickname = models.CharField(max_length=20, verbose_name='昵称')
     target_post = models.ForeignKey(to=Post, on_delete=models.CASCADE, verbose_name='评论文章')
-    email = models.EmailField(verbose_name='邮箱', null=True, default=None)
+    email = models.EmailField(verbose_name='邮箱', null=True, default=None, blank=True)
     url = models.URLField(blank=True, null=True, default=None, verbose_name='个人网站')
     content = models.CharField(max_length=500, verbose_name='评论内容')
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')

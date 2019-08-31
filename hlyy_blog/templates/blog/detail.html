@@ -11,7 +11,7 @@
                 <li class="list-inline-item mx-3"><i class="icon-user mr-2"></i>HLYY</li>
                 <li class="list-inline-item mx-3"><i class="icon-eye-open mr-2"></i> {{ post.pv }}阅读</li>
                 <li class="list-inline-item mx-3"><i class="icon-calendar mr-2"></i>{{ post.created_time }}</li>
-                <li class="list-inline-item mx-3"><i class="icon-comments mr-2"></i>{{ post.comment_count }}评论</li>
+                <li class="list-inline-item mx-3"><i class="icon-comments mr-2"></i>{{ post.comment_set.count }}条评论</li>
             </ul>
             <hr class="my-3">
             <p class="card-text">
